@@ -1,0 +1,86 @@
+{
+  "name": "ToolOutput",
+  "type": "object",
+  "properties": {
+    "tool": {
+      "type": "string",
+      "enum": [
+        "image",
+        "icon",
+        "voiceover",
+        "brainstorm"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "yellow"
+      ],
+      "description": "Which tool produced this output"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short label for the library"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "What was asked for"
+    },
+    "url": {
+      "type": "string",
+      "description": "Public url of the generated image or audio"
+    },
+    "text": {
+      "type": "string",
+      "description": "Generated text, as JSON for structured results"
+    },
+    "meta": {
+      "type": "string",
+      "description": "JSON string of the settings used"
+    }
+  },
+  "required": [
+    "tool"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

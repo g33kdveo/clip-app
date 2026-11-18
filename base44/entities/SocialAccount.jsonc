@@ -1,0 +1,100 @@
+{
+  "name": "SocialAccount",
+  "type": "object",
+  "properties": {
+    "platform": {
+      "type": "string",
+      "enum": [
+        "youtube",
+        "instagram",
+        "tiktok",
+        "x"
+      ],
+      "enumColors": [
+        "red",
+        "pink",
+        "gray",
+        "blue"
+      ],
+      "description": "Which platform this account lives on"
+    },
+    "handle": {
+      "type": "string",
+      "description": "The username on that platform, without the @"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "avatar_url": {
+      "type": "string"
+    },
+    "profile_url": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "string"
+    },
+    "followers": {
+      "type": "number",
+      "default": 0
+    },
+    "posts_count": {
+      "type": "number",
+      "default": 0,
+      "description": "How many posts the account says it has"
+    },
+    "note": {
+      "type": "string",
+      "description": "What the lookup could and could not read"
+    },
+    "synced_at": {
+      "type": "string",
+      "description": "When the profile was last read"
+    }
+  },
+  "required": [
+    "platform",
+    "handle"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

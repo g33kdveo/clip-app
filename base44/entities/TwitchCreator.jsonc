@@ -1,0 +1,95 @@
+{
+  "name": "TwitchCreator",
+  "type": "object",
+  "properties": {
+    "login": {
+      "type": "string",
+      "description": "Twitch login, lowercase, e.g. lacy"
+    },
+    "twitch_id": {
+      "type": "string",
+      "description": "Twitch user id, used to read their clips"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "avatar_url": {
+      "type": "string"
+    },
+    "profile_url": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "The Campaign this creator is clipped under"
+    },
+    "live": {
+      "type": "boolean",
+      "default": false,
+      "description": "Live the last time the board checked"
+    },
+    "live_title": {
+      "type": "string"
+    },
+    "live_game": {
+      "type": "string"
+    },
+    "viewers": {
+      "type": "number",
+      "default": 0
+    },
+    "started_at": {
+      "type": "string"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "last_checked_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "login"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

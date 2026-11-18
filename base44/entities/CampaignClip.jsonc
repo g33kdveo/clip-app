@@ -1,0 +1,125 @@
+{
+  "name": "CampaignClip",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string",
+      "description": "The Campaign this clip was submitted to"
+    },
+    "clip_id": {
+      "type": "string",
+      "description": "The Clip it came from, when it came from here"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "youtube",
+        "instagram",
+        "tiktok",
+        "x"
+      ],
+      "enumColors": [
+        "red",
+        "pink",
+        "gray",
+        "blue"
+      ]
+    },
+    "creator": {
+      "type": "string",
+      "description": "Handle of the clipper who posted it"
+    },
+    "post_url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "description": "The posted caption, for recognising the clip later"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    },
+    "likes": {
+      "type": "number",
+      "default": 0
+    },
+    "payout": {
+      "type": "number",
+      "default": 0,
+      "description": "Views divided by 1,000, times the campaign rate"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "approved",
+        "paid",
+        "rejected"
+      ],
+      "enumColors": [
+        "yellow",
+        "green",
+        "blue",
+        "red"
+      ],
+      "default": "submitted"
+    },
+    "posted_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "note": {
+      "type": "string"
+    },
+    "external_id": {
+      "type": "string",
+      "description": "The submission id on Content Rewards, used to keep the sync in step"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "platform"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

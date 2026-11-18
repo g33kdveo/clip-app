@@ -1,0 +1,113 @@
+{
+  "name": "SocialPost",
+  "type": "object",
+  "properties": {
+    "account_id": {
+      "type": "string",
+      "description": "The SocialAccount this post belongs to"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "youtube",
+        "instagram",
+        "tiktok",
+        "x"
+      ],
+      "enumColors": [
+        "red",
+        "pink",
+        "gray",
+        "blue"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "The post's caption, title or opening line"
+    },
+    "url": {
+      "type": "string",
+      "description": "Link to the post itself"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    },
+    "likes": {
+      "type": "number",
+      "default": 0
+    },
+    "comments": {
+      "type": "number",
+      "default": 0
+    },
+    "posted_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "clip_id": {
+      "type": "string",
+      "description": "The Clip this post came from, when it came from here"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "synced"
+      ],
+      "enumColors": [
+        "gray",
+        "blue"
+      ],
+      "default": "manual",
+      "description": "Where the numbers came from"
+    }
+  },
+  "required": [
+    "platform"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

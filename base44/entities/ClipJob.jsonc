@@ -1,0 +1,296 @@
+{
+  "name": "ClipJob",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Video title read from the source or the uploaded file name"
+    },
+    "channel": {
+      "type": "string",
+      "description": "Source creator, used for the credit line"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "link",
+        "upload",
+        "vod",
+        "live"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "gray",
+        "yellow"
+      ],
+      "default": "link",
+      "description": "How the video arrived. 'live' is reserved for live-stream watching later"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "The pasted link, when the job came from one"
+    },
+    "source_note": {
+      "type": "string",
+      "description": "What the link actually gave us, and what is still missing for rendering"
+    },
+    "file_uri": {
+      "type": "string",
+      "description": "Private storage uri of the uploaded video"
+    },
+    "download_job_id": {
+      "type": "string",
+      "description": "The YouTube download being waited on while a link's file is pulled down"
+    },
+    "duration": {
+      "type": "number",
+      "description": "Source length in seconds"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "resolving",
+        "transcribing",
+        "picking",
+        "ready",
+        "failed",
+        "needs_file"
+      ],
+      "enumColors": [
+        "gray",
+        "yellow",
+        "yellow",
+        "yellow",
+        "green",
+        "red",
+        "gray"
+      ],
+      "default": "draft"
+    },
+    "stage_note": {
+      "type": "string",
+      "description": "Human-readable line about the current or failed stage"
+    },
+    "transcript": {
+      "type": "string",
+      "description": "Plain transcript text of the source"
+    },
+    "timed_lines": {
+      "type": "array",
+      "description": "Transcript split into sentences with timestamps",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t": {
+            "type": "number"
+          },
+          "e": {
+            "type": "number"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "word_count": {
+      "type": "number"
+    },
+    "clip_count": {
+      "type": "number",
+      "description": "How many clips were asked for"
+    },
+    "clip_length": {
+      "type": "number",
+      "default": 45,
+      "description": "Target length of each clip in seconds"
+    },
+    "language": {
+      "type": "string",
+      "default": "auto",
+      "description": "Spoken language of the source, or 'auto' to detect"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "talking",
+        "action",
+        "no_talking",
+        "podcast",
+        "interview"
+      ],
+      "enumColors": [
+        "gray",
+        "blue",
+        "red",
+        "purple",
+        "green",
+        "yellow"
+      ],
+      "default": "auto",
+      "description": "What kind of moment to look for"
+    },
+    "lead_in": {
+      "type": "number",
+      "default": 0,
+      "description": "Seconds kept before the first spoken line"
+    },
+    "focus": {
+      "type": "string",
+      "description": "Optional steer from the user, e.g. only the parts about pricing"
+    },
+    "audio_level": {
+      "type": "string",
+      "enum": [
+        "original",
+        "boosted",
+        "soft"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "blue"
+      ],
+      "default": "original",
+      "description": "How loud the source audio is mixed in the clip"
+    },
+    "voice": {
+      "type": "string",
+      "enum": [
+        "punchy",
+        "hype",
+        "calm",
+        "analytical"
+      ],
+      "enumColors": [
+        "yellow",
+        "red",
+        "blue",
+        "gray"
+      ],
+      "default": "punchy",
+      "description": "Writing voice for the headline and post caption"
+    },
+    "layout": {
+      "type": "string",
+      "enum": [
+        "fill",
+        "band",
+        "stacked",
+        "italic",
+        "podcast",
+        "streamer",
+        "reaction",
+        "glow",
+        "guest",
+        "pop",
+        "comic",
+        "cinema",
+        "split",
+        "letterbox",
+        "neon",
+        "cutout"
+      ],
+      "enumColors": [
+        "blue",
+        "yellow",
+        "yellow",
+        "purple",
+        "pink",
+        "red",
+        "green",
+        "pink",
+        "blue",
+        "green",
+        "red",
+        "gray",
+        "blue",
+        "gray",
+        "purple",
+        "yellow"
+      ],
+      "default": "fill",
+      "description": "Template used to render the clips"
+    },
+    "captions": {
+      "type": "string",
+      "enum": [
+        "spoken",
+        "english",
+        "none"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "gray"
+      ],
+      "default": "spoken"
+    },
+    "hook": {
+      "type": "string",
+      "enum": [
+        "english",
+        "spoken",
+        "none"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "gray"
+      ],
+      "default": "english"
+    },
+    "clip_total": {
+      "type": "number",
+      "description": "How many clips the job actually produced"
+    }
+  },
+  "required": [
+    "title",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

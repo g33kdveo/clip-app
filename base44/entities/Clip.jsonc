@@ -1,0 +1,244 @@
+{
+  "name": "Clip",
+  "type": "object",
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "description": "The ClipJob this moment belongs to"
+    },
+    "rank": {
+      "type": "number",
+      "description": "1 = best moment of the job"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short working title, never shown on the clip"
+    },
+    "first_line": {
+      "type": "string",
+      "description": "The first spoken line of the moment"
+    },
+    "start": {
+      "type": "number",
+      "description": "Start of the moment in seconds from the source start"
+    },
+    "end": {
+      "type": "number",
+      "description": "End of the moment in seconds from the source start"
+    },
+    "duration": {
+      "type": "number"
+    },
+    "score": {
+      "type": "number",
+      "description": "1-10, how postable the moment is"
+    },
+    "reason": {
+      "type": "string",
+      "description": "One sentence on why this moment works"
+    },
+    "post_caption": {
+      "type": "string",
+      "description": "Caption to paste when posting, ending with the source credit"
+    },
+    "hook": {
+      "type": "string",
+      "description": "The headline shown on the clip"
+    },
+    "hook_options": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Three alternative headlines"
+    },
+    "layout": {
+      "type": "string",
+      "enum": [
+        "fill",
+        "band",
+        "stacked",
+        "italic",
+        "podcast",
+        "streamer",
+        "reaction",
+        "glow",
+        "guest",
+        "pop",
+        "comic",
+        "cinema",
+        "split",
+        "letterbox",
+        "neon",
+        "cutout"
+      ],
+      "enumColors": [
+        "blue",
+        "yellow",
+        "yellow",
+        "purple",
+        "pink",
+        "red",
+        "green",
+        "pink",
+        "blue",
+        "green",
+        "red",
+        "gray",
+        "blue",
+        "gray",
+        "purple",
+        "yellow"
+      ],
+      "default": "fill"
+    },
+    "cam": {
+      "type": "string",
+      "enum": [
+        "br",
+        "bl",
+        "tr",
+        "tl",
+        "none"
+      ],
+      "enumColors": [
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "gray"
+      ],
+      "default": "br",
+      "description": "Which corner of the source holds the face cam (streamer template)"
+    },
+    "zoom": {
+      "type": "number",
+      "default": 1
+    },
+    "bg": {
+      "type": "string",
+      "default": "#FED50C"
+    },
+    "audio_level": {
+      "type": "string",
+      "enum": [
+        "original",
+        "boosted",
+        "soft"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "blue"
+      ],
+      "default": "original"
+    },
+    "captions_mode": {
+      "type": "string",
+      "enum": [
+        "spoken",
+        "english",
+        "none"
+      ],
+      "enumColors": [
+        "green",
+        "blue",
+        "gray"
+      ],
+      "default": "spoken"
+    },
+    "words": {
+      "type": "array",
+      "description": "Caption words for this clip, timed from the clip start",
+      "items": {
+        "type": "object",
+        "properties": {
+          "w": {
+            "type": "string"
+          },
+          "s": {
+            "type": "number"
+          },
+          "e": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "caption_lines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The transcript lines that fall inside this moment"
+    },
+    "keep": {
+      "type": "boolean",
+      "default": true
+    },
+    "rendered_uri": {
+      "type": "string",
+      "description": "Private storage uri of the rendered vertical clip"
+    },
+    "rendered_ext": {
+      "type": "string",
+      "default": "webm"
+    },
+    "thumbnail_uri": {
+      "type": "string"
+    },
+    "render_version": {
+      "type": "number",
+      "default": 0
+    },
+    "rendered_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "job_id",
+    "start",
+    "end"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

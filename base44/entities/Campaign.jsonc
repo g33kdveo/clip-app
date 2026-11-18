@@ -1,0 +1,142 @@
+{
+  "name": "Campaign",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Campaign name, e.g. the creator or the show being clipped"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Who pays the reward"
+    },
+    "brief": {
+      "type": "string",
+      "description": "What kind of moments the campaign wants"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Link to the video or channel clippers should cut from"
+    },
+    "source_channel": {
+      "type": "string",
+      "description": "Creator or channel name, used in the credit line"
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "youtube",
+          "instagram",
+          "tiktok",
+          "x"
+        ]
+      },
+      "description": "Where clips from this campaign may be posted"
+    },
+    "rate_per_1k": {
+      "type": "number",
+      "default": 0,
+      "description": "Reward paid per 1,000 views"
+    },
+    "budget": {
+      "type": "number",
+      "default": 0,
+      "description": "Total reward pool for this campaign"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "live",
+        "paused",
+        "ended"
+      ],
+      "enumColors": [
+        "gray",
+        "green",
+        "yellow",
+        "red"
+      ],
+      "default": "draft"
+    },
+    "starts_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "ends_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "rules": {
+      "type": "string",
+      "description": "Minimum length, caption credit, one clip per moment, and so on"
+    },
+    "external_id": {
+      "type": "string",
+      "description": "The campaign id on Content Rewards, used to keep the sync in step"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "contentrewards"
+      ],
+      "enumColors": [
+        "gray",
+        "blue"
+      ],
+      "default": "manual",
+      "description": "Where this campaign record came from"
+    },
+    "last_synced_at": {
+      "type": "string",
+      "description": "When the Content Rewards sync last refreshed this campaign"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
